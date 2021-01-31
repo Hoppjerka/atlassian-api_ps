@@ -13,17 +13,11 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  test:
-    # The type of runner that the job will run on
+  unit-test:
     runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # Runs a single command using the runners shell
       - name: Install PowerShell
         run: sudo apt-get install powershell
       - name: Install Pester
@@ -31,4 +25,26 @@ jobs:
       - name: Import Pester
         run: pwsh -c "Import-Module Pester -PassThru"
       - name: Run tests
-        run: pwsh -c "Invoke-Pester -Passthru -ExcludeTag "Integration", "Dummy", "Draft" | Export-JUnitReport -Path JUnitReport.xml"
+        run: pwsh -c "Invoke-Pester -Passthru -CodeCoverage -ExcludeTag "Integration", "Dummy", "Draft" | Export-JUnitReport -Path JUnitReport.xml"
+      # Upload Test results
+      - name: Archive test report
+        uses: actions/upload-artifact@v2
+        with:
+          name: JUnitReport
+          path: JUnitReport.xml
+          retention-days: 5
+      - name: Archive code coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage
+          path: coverage.xml
+          retention-days: 5
+
+
+
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install PowerShell
+        run: echo hello build step
