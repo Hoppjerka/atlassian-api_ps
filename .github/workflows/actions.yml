@@ -30,7 +30,7 @@ jobs:
 
   build:
     needs: unit-test
-    if: (jobs.unit-test.status == 'success')
+    if: ${{ success() }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
