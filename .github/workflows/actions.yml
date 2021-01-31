@@ -25,7 +25,7 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Install PowerShell
-        run: apt-get install powershell
+        run: sudo apt-get install powershell
       - name: Install Pester
         run: pwsh -c "Install-Module -Name Pester -Force",
       - name: Import Pester
