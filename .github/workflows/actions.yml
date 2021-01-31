@@ -71,4 +71,4 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install PowerShell
-        run: echo O'hoy deploy!
+        run: echo ohoy deploy
