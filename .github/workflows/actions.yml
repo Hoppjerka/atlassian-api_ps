@@ -25,7 +25,7 @@ jobs:
       - name: Import Pester
         run: pwsh -c "Import-Module Pester -PassThru"
       - name: Run tests
-        run: pwsh -c "Invoke-Pester -Passthru -CodeCoverage -ExcludeTag "Integration", "Dummy", "Draft" | Export-JUnitReport -Path JUnitReport.xml"
+        run: pwsh -c "Invoke-Pester -Passthru -CodeCoverage (Get-ChildItem -Path $PSScriptRoot\*.ps1 -Exclude *.Tests.* ).FullName -ExcludeTag "Integration", "Dummy", "Draft" | Export-JUnitReport -Path JUnitReport.xml"
       # Upload Test results
       - name: Archive test report
         uses: actions/upload-artifact@v2
