@@ -27,7 +27,7 @@ jobs:
       - name: Install PowerShell
         run: sudo apt-get install powershell
       - name: Install Pester
-        run: pwsh -c "Install-Module -Name Pester -Force",
+        run: pwsh -c "Install-Module -Name Pester -Force"
       - name: Import Pester
         run: pwsh -c "Import-Module Pester -PassThru"
       - name: Run tests
